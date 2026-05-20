@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Tasks template for modernization plan. Generate this file alongside plan.md to track individual migration tasks.",
+  "tasks": [
+    {
+      "type": "upgrade",
+      "id": "001-upgrade-dotnet-9",
+      "description": "Upgrade project runtime target to .NET 9 as explicitly requested.",
+      "reason": "The modernization request explicitly requires upgrading the application to .NET 9.",
+      "requirements": "Retarget the project to .NET 9 and ensure the solution restores, builds, and tests successfully with the new target.",
+      "successCriteria": {
+        "passBuild": "true",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "security",
+      "id": "002-security-cve-remediation",
+      "description": "Scan dependencies for known CVEs and remediate vulnerabilities before deployment readiness.",
+      "reason": "Security compliance requires dependency vulnerability remediation in every modernization plan.",
+      "requirements": "Scan project dependencies for CVEs, upgrade vulnerable packages to patched versions, document any major-version remediation risk, and verify build/test pass after remediation.",
+      "environmentConfiguration": "Runtime and build environment produced by the upgrade task.",
+      "dependencies": [
+        "001-upgrade-dotnet-9"
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "passUnitTests": "true"
+      },
+      "skills": [
+        {
+          "name": "validate-cves-and-fix",
+          "location": "builtin"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "planName": "plan",
+    "projectName": "DotNetAwsStorage",
+    "language": "dotnet",
+    "createdAt": "2026-05-20T03:52:05.536Z",
+    "version": "1.0"
+  }
+}
